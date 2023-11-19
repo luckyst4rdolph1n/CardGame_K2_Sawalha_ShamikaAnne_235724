@@ -61,7 +61,8 @@ public class GameMaster{
                     dealMessage = Player1.getName() + " draws " + card.getName() + ".\n";
                     System.out.println(dealMessage);
                     turnCounter += 1;
-                    deckTracker += 1;
+                    deck.remove(card);
+                    //deckTracker += 1;
                 }else{
                     dealMessage = Player1.getName() + "'s hand is full.";
                     break;
@@ -73,7 +74,8 @@ public class GameMaster{
                     dealMessage = Player2.getName() + " draws " + card.getName() + ".\n";
                     System.out.println(dealMessage);
                     turnCounter += 1;
-                    deckTracker += 1;
+                    deck.remove(card);
+                    //deckTracker += 1;
                 }else{
                     dealMessage = Player2.getName() + "'s hand is full.";
                     break;
@@ -104,17 +106,21 @@ public class GameMaster{
                 if(Player2.getActiveCard().getHealth() <= 0){
                     playMessage += "   " + Player2.getName() + " discards " + Player2.getActiveCard().getName() + ".\n";
                     Player2.discard();
-                    for(int i=deckTracker+1; i<deckTracker+2; i++){
+                    for(int i=0; i<1; i++){
                         if(deck.get(i).getHealth() * deck.get(i).getPower() > deck.get(i+1).getHealth() * deck.get(i+1).getPower()){
                             Player2.drawCard(deck.get(i));
                             playMessage += "   " + Player2.getName() + " draws " + deck.get(i).getName() + ".\n";
+                            deck.add(deck.get(i+1));
+                            deck.remove(i+1);
                             deck.remove(i);
                         }else{
                             Player2.drawCard(deck.get(i+1));
                             playMessage += "   " + Player2.getName() + " draws " + deck.get(i+1).getName() + ".\n";
+                            deck.add(deck.get(i));
                             deck.remove(i+1);
+                            deck.remove(i);
                         } 
-                    }deckTracker += 1;
+                    }//deckTracker += 1;
                     Player1.claimToken();
                     playMessage += "   " + Player1.getName() + " gets a token!\n";
                     if(Player1.getTokens() >= 3){
@@ -136,13 +142,17 @@ public class GameMaster{
                         if(deck.get(i).getHealth() * deck.get(i).getPower() > deck.get(i+1).getHealth() * deck.get(i+1).getPower()){
                             Player1.drawCard(deck.get(i));
                             playMessage += "   " + Player1.getName() + " draws " + deck.get(i).getName() + ".\n";
+                            deck.add(deck.get(i+1));
+                            deck.remove(i+1);
                             deck.remove(i);
                         }else{
                             Player1.drawCard(deck.get(i+1));
                             playMessage += "   " + Player1.getName() + " draws " + deck.get(i+1).getName() + ".\n";
+                            deck.add(deck.get(i));
                             deck.remove(i+1);
+                            deck.remove(i);
                         } 
-                    }deckTracker += 1;
+                    }//deckTracker += 1;
                 Player2.claimToken();
                 playMessage += "   " + Player2.getName() + " gets a token!\n";
                 if(Player2.getTokens() >= 3){
