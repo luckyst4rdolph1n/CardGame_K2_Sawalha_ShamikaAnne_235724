@@ -4,10 +4,11 @@ public class GameMaster{
 
     private int turnCounter;
     private ArrayList<Card> deck;
+    private ArrayList<Card> deckCopy;
     private boolean winner;
     private Player Player1;
     private Player Player2;
-    private int deckTracker;
+    //private int deckTracker;
     
 
     private void assembleDeck(){
@@ -40,16 +41,17 @@ public class GameMaster{
         deck.add( new Card( "Ghost", "Zulu", 125, 46 ) );
     }
 
-
+    @SuppressWarnings("unchecked")
     public GameMaster(Player a, Player b){
 
         turnCounter = 1;
         deck = new ArrayList<Card>();
         assembleDeck();
+        deckCopy = (ArrayList<Card>)deck.clone();
         winner = false;
         Player1 = a;
         Player2 = b;
-        deckTracker = 0;
+        //deckTracker = 0;
     }
 
     public String dealCard(){
@@ -61,7 +63,7 @@ public class GameMaster{
                     dealMessage = Player1.getName() + " draws " + card.getName() + ".\n";
                     System.out.println(dealMessage);
                     turnCounter += 1;
-                    deck.remove(card);
+                    deckCopy.remove(card);
                     //deckTracker += 1;
                 }else{
                     dealMessage = Player1.getName() + "'s hand is full.";
@@ -74,7 +76,7 @@ public class GameMaster{
                     dealMessage = Player2.getName() + " draws " + card.getName() + ".\n";
                     System.out.println(dealMessage);
                     turnCounter += 1;
-                    deck.remove(card);
+                    deckCopy.remove(card);
                     //deckTracker += 1;
                 }else{
                     dealMessage = Player2.getName() + "'s hand is full.";
@@ -106,29 +108,29 @@ public class GameMaster{
                 if(Player2.getActiveCard().getHealth() <= 0){
                     playMessage += "   " + Player2.getName() + " discards " + Player2.getActiveCard().getName() + ".\n";
                     Player2.discard();
+                    int toRemove = 0;
                     for(int i=0; i<1; i++){
-                        if(deck.get(i).getHealth() * deck.get(i).getPower() > deck.get(i+1).getHealth() * deck.get(i+1).getPower()){
-                            Player2.drawCard(deck.get(i));
-                            playMessage += "   " + Player2.getName() + " draws " + deck.get(i).getName() + ".\n";
-                            deck.add(deck.get(i+1));
-                            deck.remove(i+1);
-                            deck.remove(i);
+                        if(deckCopy.get(i).getHealth() * deckCopy.get(i).getPower() > deckCopy.get(i+1).getHealth() * deckCopy.get(i+1).getPower()){
+                            Player2.drawCard(deckCopy.get(i));
+                            playMessage += "   " + Player2.getName() + " draws " + deckCopy.get(i).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(i+1));
                         }else{
-                            Player2.drawCard(deck.get(i+1));
-                            playMessage += "   " + Player2.getName() + " draws " + deck.get(i+1).getName() + ".\n";
-                            deck.add(deck.get(i));
-                            deck.remove(i+1);
-                            deck.remove(i);
-                        } 
-                    }//deckTracker += 1;
-                    Player1.claimToken();
-                    playMessage += "   " + Player1.getName() + " gets a token!\n";
-                    if(Player1.getTokens() >= 3){
-                        winner = true;
-                        if(hasWinner() == true){
-                            playMessage += Player1.getName() + " wins!!!\n"; 
+                            Player2.drawCard(deckCopy.get(i+1));
+                            playMessage += "   " + Player2.getName() + " draws " + deckCopy.get(i+1).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(i));
                         } 
                     }
+                    deckCopy.remove(toRemove+1);
+                    deckCopy.remove(toRemove);
+                            //deckTracker += 1;
+                Player1.claimToken();
+                playMessage += "   " + Player1.getName() + " gets a token!\n";
+                if(Player1.getTokens() >= 3){
+                    winner = true;
+                    if(hasWinner() == true){
+                        playMessage += Player1.getName() + " wins!!!\n"; 
+                    } 
+                }
                 }
                 turnCounter += 1;
              
@@ -138,29 +140,28 @@ public class GameMaster{
                 if(Player1.getActiveCard().getHealth() <= 0){
                     playMessage += "   " + Player1.getName() + " discards " + Player1.getActiveCard().getName() + ".\n";
                     Player1.discard();
-                    for(int i=deckTracker; i<deckTracker+1; i++){
-                        if(deck.get(i).getHealth() * deck.get(i).getPower() > deck.get(i+1).getHealth() * deck.get(i+1).getPower()){
-                            Player1.drawCard(deck.get(i));
-                            playMessage += "   " + Player1.getName() + " draws " + deck.get(i).getName() + ".\n";
-                            deck.add(deck.get(i+1));
-                            deck.remove(i+1);
-                            deck.remove(i);
+                    int toRemove = 0;
+                    for(int i=0; i<1; i++){
+                        if(deckCopy.get(i).getHealth() * deckCopy.get(i).getPower() > deckCopy.get(i+1).getHealth() * deckCopy.get(i+1).getPower()){
+                            Player1.drawCard(deckCopy.get(i));
+                            playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(i).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(i+1));
                         }else{
-                            Player1.drawCard(deck.get(i+1));
-                            playMessage += "   " + Player1.getName() + " draws " + deck.get(i+1).getName() + ".\n";
-                            deck.add(deck.get(i));
-                            deck.remove(i+1);
-                            deck.remove(i);
+                            Player1.drawCard(deckCopy.get(i+1));
+                            playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(i+1).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(i));
                         } 
                     }//deckTracker += 1;
+                    deckCopy.remove(toRemove+1);
+                    deckCopy.remove(toRemove);
                 Player2.claimToken();
                 playMessage += "   " + Player2.getName() + " gets a token!\n";
                 if(Player2.getTokens() >= 3){
-                        winner = true;
-                        if(hasWinner() == true){
-                            playMessage += Player2.getName() + " wins!!!\n";
-                        } 
-                    }
+                    winner = true;
+                    if(hasWinner() == true){
+                        playMessage += Player2.getName() + " wins!!!\n";
+                    } 
+                }
                 }
                 turnCounter += 1;
             }
@@ -238,7 +239,7 @@ public class GameMaster{
     public String gameReport(){
         String gameReport = "";
         gameReport += "---=== GAME SUMMARY ===---\n";
-        gameReport += "This game lasted " + turnCounter + " turns.\n";
+        gameReport += "This game lasted " + (turnCounter-1) + " turns.\n";
         gameReport += Player1.statusReport() + "\n";
         gameReport += Player2.statusReport();
         return gameReport;

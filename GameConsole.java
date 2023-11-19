@@ -7,7 +7,7 @@ public class GameConsole{
         Player player1 = new Player(args[0]);
         Player player2 = new Player(args[1]);
         System.out.println("Welcome, " + player1.getName() + " and " + player2.getName() +"!" );
-        System.out.println("The game begins.");
+        System.out.println("The game begins.\n");
         GameMaster gameMaster = new GameMaster(player1, player2);
         gameMaster.dealCard();
         Scanner scanner = new Scanner(System.in);
