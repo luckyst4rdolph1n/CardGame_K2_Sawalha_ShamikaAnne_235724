@@ -9,7 +9,7 @@ public class GameConsole{
         System.out.println("Welcome, " + player1.getName() + " and " + player2.getName() +"!" );
         System.out.println("The game begins.\n");
         GameMaster gameMaster = new GameMaster(player1, player2);
-        gameMaster.dealCard();
+        System.out.print(gameMaster.dealCard());
         Scanner scanner = new Scanner(System.in);
         while(gameMaster.hasWinner() == false){
             System.out.print("Attack or Swap? ");

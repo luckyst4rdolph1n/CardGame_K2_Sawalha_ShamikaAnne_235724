@@ -51,35 +51,32 @@ public class GameMaster{
         winner = false;
         Player1 = a;
         Player2 = b;
-        //deckTracker = 0;
     }
 
     public String dealCard(){
         String dealMessage = "";
+        String altMessage = "";
         for(Card card: deck){
             if(turnCounter % 2 != 0){
                 if(Player1.handIsFull() == false){
                     Player1.drawCard(card);
-                    dealMessage = Player1.getName() + " draws " + card.getName() + ".\n";
-                    System.out.println(dealMessage);
+                    dealMessage += Player1.getName() + " draws " + card.getName() + ".\n\n";
+                    //System.out.println(dealMessage);
                     turnCounter += 1;
                     deckCopy.remove(card);
-                    //deckTracker += 1;
                 }else{
-                    dealMessage = Player1.getName() + "'s hand is full.";
+                    altMessage += Player1.getName() + "'s hand is full.";
                     break;
                 }
-            
             }else{
                 if(Player2.handIsFull() == false){
                     Player2.drawCard(card);
-                    dealMessage = Player2.getName() + " draws " + card.getName() + ".\n";
-                    System.out.println(dealMessage);
+                    dealMessage += Player2.getName() + " draws " + card.getName() + ".\n\n";
+                    //System.out.println(dealMessage);
                     turnCounter += 1;
                     deckCopy.remove(card);
-                    //deckTracker += 1;
                 }else{
-                    dealMessage = Player2.getName() + "'s hand is full.";
+                    altMessage += Player2.getName() + "'s hand is full.";
                     break;
                 }
             }
@@ -122,14 +119,13 @@ public class GameMaster{
                     }
                     deckCopy.remove(toRemove+1);
                     deckCopy.remove(toRemove);
-                            //deckTracker += 1;
                 Player1.claimToken();
                 playMessage += "   " + Player1.getName() + " gets a token!\n";
                 if(Player1.getTokens() >= 3){
                     winner = true;
-                    if(hasWinner() == true){
-                        playMessage += Player1.getName() + " wins!!!\n"; 
-                    } 
+                    //if(hasWinner() == true){
+                    playMessage += Player1.getName() + " wins!!!\n"; 
+                    //} 
                 }
                 }
                 turnCounter += 1;
@@ -151,16 +147,16 @@ public class GameMaster{
                             playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(i+1).getName() + ".\n";
                             deckCopy.add(deckCopy.get(i));
                         } 
-                    }//deckTracker += 1;
+                    }
                     deckCopy.remove(toRemove+1);
                     deckCopy.remove(toRemove);
                 Player2.claimToken();
                 playMessage += "   " + Player2.getName() + " gets a token!\n";
                 if(Player2.getTokens() >= 3){
                     winner = true;
-                    if(hasWinner() == true){
-                        playMessage += Player2.getName() + " wins!!!\n";
-                    } 
+                    //if(hasWinner() == true){
+                    playMessage += Player2.getName() + " wins!!!\n";
+                    //} 
                 }
                 }
                 turnCounter += 1;
@@ -168,7 +164,6 @@ public class GameMaster{
         }
         return playMessage;
     }
-
     /*  Dragon cards are resistant to Ghost cards.
         Ghost cards are resistant to Fairy cards.
         Fairy cards are resistant to Dragon cards.

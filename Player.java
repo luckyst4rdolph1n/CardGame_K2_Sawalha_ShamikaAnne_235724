@@ -82,21 +82,17 @@ public class Player{
             playerDeck[0] = playerDeck[index+1];
             playerDeck[index+1] = s;
             swapMessage += playerDeck[0].getName() + " is now active with " + playerDeck[0].getHealth() + " health.\n";
-            //System.out.println(swapMessage);
         }else if(playerDeck.length == 2){
             Card s = playerDeck[0];
             playerDeck[0] = playerDeck[-1];
             playerDeck[-1] = s;
             swapMessage += playerDeck[0].getName() + " is now active with " + playerDeck[0].getHealth() + " health.\n";
-            //System.out.println(swapMessage);
         }else{
             swapMessage += playerName + "has no other card to swap with. Turn forfeited.";
-            //System.out.println(swapMessage);
         }return swapMessage;
     }
 
     public void discard(){
-        //Card toReplace = playerDeck[0]
         if(playerDeck.length > 1){
             for(int i=0; i<playerDeck.length-1; i++){
                 playerDeck[i] = playerDeck[i+1];
