@@ -1,3 +1,3 @@
-# CardGame_K2_Sawalha_ShamikaAnne_235724
+# Simple Card Game
 
-Card game project made with Java. 
+project made with Java. 
