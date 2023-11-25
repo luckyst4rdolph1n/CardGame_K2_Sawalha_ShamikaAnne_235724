@@ -22,6 +22,7 @@ public class SimpleGUI{
     private JTextField player2TF;
     private JLabel player1Label;
     private JLabel player2Label;
+    private JCheckBox randomDeal;
     private JLabel question;
     private JButton startGame;
     private JButton attack;
@@ -53,6 +54,7 @@ public class SimpleGUI{
         player1Label = new JLabel("Player 1:");
         player2Label = new JLabel("Player 2:");
         question = new JLabel("Attack or Swap?");
+        randomDeal = new JCheckBox("Random Deal", false);
         player1TF = new JTextField(20);
         player2TF = new JTextField(20);
         startGame = new JButton("Start Game");
@@ -100,6 +102,13 @@ public class SimpleGUI{
         gbc.insets = new Insets(0, 2, 2, 0);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         upperPanel.add(startGame, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 2, 4, 0);
+        gbc.fill = GridBagConstraints.NONE;
+        upperPanel.add(randomDeal, gbc);
 
         midPanel.setLayout(gridBag);
 
@@ -150,7 +159,22 @@ public class SimpleGUI{
     
     
     String playerMove;
+    String answer;
     public void gameListeners(){
+
+        ActionListener randomCheckBox = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                //Object status = ae.getSource();
+
+                if(randomDeal.isSelected()){
+                    answer = "yes";
+                }else{
+                    answer = "no";
+                }
+            }
+        };
+        randomDeal.addActionListener(randomCheckBox);
         ActionListener startingActions = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae){
@@ -162,7 +186,11 @@ public class SimpleGUI{
                 startingText += "Welcome, " + name1 + " and " + name2 +"!\nThe game begins.\n\n";
                 area.setText(startingText);
                 gameMaster = new GameMaster(player1, player2);
-                startingText += gameMaster.dealCard();
+                if(answer.equals("yes")){
+                    startingText += gameMaster.randomDealCard();
+                }else if(answer.equals("no")){
+                    startingText += gameMaster.dealCard();
+                }
                 area.setText(startingText);
             }
         };
