@@ -7,14 +7,12 @@ public class Player{
     private Card[] playerDeck;
     private boolean fullHand;
     private static final int MAX = 5;
-    //private int cardIndex;
 
     public Player(String n){
         playerName = n;
         tokenCounter = 0;
         playerDeck = new Card[MAX];
         fullHand = false;
-        //cardIndex = 0;
     }
 
     public String getName(){
@@ -28,9 +26,7 @@ public class Player{
                 break;
             }
         }
-        //playerDeck[cardIndex] = c;
-        //cardIndex += 1;
-        }
+    }
 
     public boolean handIsFull(){
         int nonNull = 0;
@@ -41,7 +37,6 @@ public class Player{
         }
         if(nonNull == MAX){
             fullHand = true;
-            //cardIndex = -1;
         } else{
             fullHand = false;
         }return fullHand;

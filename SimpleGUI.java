@@ -11,7 +11,6 @@ public class SimpleGUI{
 
     private GridBagLayout gridBag;
     private GridBagConstraints gbc;
-    //private BoxLayout box;
 
     private JPanel upperPanel;
     private JPanel mainPanel;
@@ -30,10 +29,10 @@ public class SimpleGUI{
     private JButton displayStats;
     private JTextArea area;
 
-    public GameMaster gameMaster;
+    private GameMaster gameMaster;
     private String name1, name2;
-    public Player player1;
-    public Player player2;
+    private Player player1;
+    private Player player2;
 
 
     public SimpleGUI(int w, int h){
@@ -44,7 +43,6 @@ public class SimpleGUI{
 
         gridBag = new GridBagLayout();
         gbc = new GridBagConstraints();
-        //box = new BoxLayout(, h);
 
         upperPanel = new JPanel();
         mainPanel = new JPanel();
@@ -62,19 +60,12 @@ public class SimpleGUI{
         swap = new JButton("Swap");
         displayStats = new JButton("Display Game Report");
         area = new JTextArea(25,75);
-        
-        //player1 = new Player(name1);
-        //player2 = new Player(name2);
-        //gameMaster = new GameMaster(player1, player2);
 
     }
 
     public void setUpGUI(){
         frame.setSize(width, height);
         frame.setTitle("Card Game");
-
-        //gbc.insets = new Insets(5, 2, 5, 2);
-        //cp.setLayout(gridBag);
         
         upperPanel.setLayout(gridBag);
         upperPanel.setAlignmentX(mainPanel.LEFT_ALIGNMENT);
@@ -135,14 +126,6 @@ public class SimpleGUI{
         gbc.fill = GridBagConstraints.HORIZONTAL;
         midPanel.add(displayStats, gbc);
 
-        //bottomPanel.setLayout(gridBag);
-
-        //gbc.gridx = 2;
-        //gbc.gridy = 1;
-        //gbc.gridwidth = 10;
-        //gbc.gridheight = ;
-        //gbc.anchor = GridBagConstraints.CENTER;
-        //gbc.fill = GridBagConstraints.NONE;
         bottomPanel.add(area);
 
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -159,13 +142,12 @@ public class SimpleGUI{
     
     
     String playerMove;
-    String answer;
+    String answer = "no";
     public void gameListeners(){
 
         ActionListener randomCheckBox = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae){
-                //Object status = ae.getSource();
 
                 if(randomDeal.isSelected()){
                     answer = "yes";

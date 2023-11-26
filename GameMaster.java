@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.Math;
 
 public class GameMaster{
 
@@ -9,28 +10,27 @@ public class GameMaster{
     private Player Player1;
     private Player Player2;
     private ArrayList<Integer> indices;
-    //private int deckTracker;
     
 
     private void assembleDeck(){
 
         deck.add( new Card( "Dragon", "Aquira", 174, 26 ) );
-        deck.add( new Card( "Ghost", "Brawn", 130, 48 ) );//--
+        deck.add( new Card( "Ghost", "Brawn", 130, 48 ) );
         deck.add( new Card( "Fairy", "Cerulea", 162, 29 ) );
         deck.add( new Card( "Dragon", "Demi", 147, 28 ) );
-        deck.add( new Card( "Ghost", "Elba", 155, 37 ) );//--
+        deck.add( new Card( "Ghost", "Elba", 155, 37 ) );
         deck.add( new Card( "Fairy", "Fye", 159, 42 ) );
-        deck.add( new Card( "Dragon", "Glyede", 129, 26 ) );//--
-        deck.add( new Card( "Ghost", "Hydran", 163, 35 ) );//--
-        deck.add( new Card( "Fairy", "Ivy", 146, 45 ) );//--
-        deck.add( new Card( "Dragon", "Jet", 170, 24 ) );//--
-        deck.add( new Card( "Ghost", "Kineti", 139, 21 ) );//--
+        deck.add( new Card( "Dragon", "Glyede", 129, 26 ) );
+        deck.add( new Card( "Ghost", "Hydran", 163, 35 ) );
+        deck.add( new Card( "Fairy", "Ivy", 146, 45 ) );
+        deck.add( new Card( "Dragon", "Jet", 170, 24 ) );
+        deck.add( new Card( "Ghost", "Kineti", 139, 21 ) );
         deck.add( new Card( "Fairy", "Levi", 160, 43 ) );
-        deck.add( new Card( "Dragon", "Meadow", 134, 29 ) );//--
+        deck.add( new Card( "Dragon", "Meadow", 134, 29 ) );
         deck.add( new Card( "Ghost", "Naidem", 165, 26 ) );
         deck.add( new Card( "Fairy", "Omi", 145, 21 ) );
         deck.add( new Card( "Dragon", "Puddles", 170, 34 ) );
-        deck.add( new Card( "Ghost", "Quarrel", 151, 29 ) );//--
+        deck.add( new Card( "Ghost", "Quarrel", 151, 29 ) );
         deck.add( new Card( "Fairy", "Raven", 168, 32 ) );
         deck.add( new Card( "Dragon", "Surge", 128, 27 ) );
         deck.add( new Card( "Ghost", "Takiru", 140, 26 ) );
@@ -38,7 +38,7 @@ public class GameMaster{
         deck.add( new Card( "Dragon", "Verwyn", 145, 25 ) );
         deck.add( new Card( "Ghost", "Wyverin", 158, 32 ) );
         deck.add( new Card( "Fairy", "Xios", 155, 27 ) );
-        deck.add( new Card( "Dragon", "Yora", 159, 44 ) );//--
+        deck.add( new Card( "Dragon", "Yora", 159, 44 ) );
         deck.add( new Card( "Ghost", "Zulu", 125, 46 ) );
     }
 
@@ -66,7 +66,6 @@ public class GameMaster{
                 if(Player1.handIsFull() == false){
                     Player1.drawCard(card);
                     dealMessage += Player1.getName() + " draws " + card.getName() + ".\n\n";
-                    //System.out.println(dealMessage);
                     turnCounter += 1;
                     deckCopy.remove(card);
                 }else{
@@ -77,7 +76,6 @@ public class GameMaster{
                 if(Player2.handIsFull() == false){
                     Player2.drawCard(card);
                     dealMessage += Player2.getName() + " draws " + card.getName() + ".\n\n";
-                    //System.out.println(dealMessage);
                     turnCounter += 1;
                     deckCopy.remove(card);
                 }else{
@@ -92,10 +90,9 @@ public class GameMaster{
     public String randomDealCard(){
         String dealMessage = "";
         String altMessage = "";
-        Random rand = new Random();
         
         for(int i = 0; i < deck.size(); i++ ){
-            int index = rand.nextInt(indices.size());
+            int index = (int) (Math.random()*indices.size());
             if(turnCounter % 2 != 0){
                 if(Player1.handIsFull() == false){
                     Player1.drawCard(deck.get(indices.get(index)));
@@ -161,9 +158,7 @@ public class GameMaster{
                 playMessage += "   " + Player1.getName() + " gets a token!\n";
                 if(Player1.getTokens() >= 3){
                     winner = true;
-                    //if(hasWinner() == true){
                     playMessage += Player1.getName() + " wins!!!\n"; 
-                    //} 
                 }
                 }
                 turnCounter += 1;
@@ -192,9 +187,7 @@ public class GameMaster{
                 playMessage += "   " + Player2.getName() + " gets a token!\n";
                 if(Player2.getTokens() >= 3){
                     winner = true;
-                    //if(hasWinner() == true){
                     playMessage += Player2.getName() + " wins!!!\n";
-                    //} 
                 }
                 }
                 turnCounter += 1;
