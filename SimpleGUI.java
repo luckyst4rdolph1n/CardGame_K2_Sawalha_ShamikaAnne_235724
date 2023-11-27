@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.nio.file.*;
 
 public class SimpleGUI{
 
@@ -27,12 +29,15 @@ public class SimpleGUI{
     private JButton attack;
     private JButton swap;
     private JButton displayStats;
+    private JButton selectDeck;
     private JTextArea area;
 
     private GameMaster gameMaster;
     private String name1, name2;
     private Player player1;
     private Player player2;
+    private boolean randomArg;
+    private boolean inputDeck;
 
 
     public SimpleGUI(int w, int h){
@@ -58,8 +63,11 @@ public class SimpleGUI{
         startGame = new JButton("Start Game");
         attack = new JButton("Attack");
         swap = new JButton("Swap");
+        selectDeck = new JButton("Upload New Deck");
         displayStats = new JButton("Display Game Report");
         area = new JTextArea(25,75);
+
+        inputDeck = false;
 
     }
 
@@ -96,6 +104,13 @@ public class SimpleGUI{
 
         gbc.gridx = 2;
         gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(0, 2, 2, 0);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        upperPanel.add(selectDeck, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.insets = new Insets(0, 2, 4, 0);
         gbc.fill = GridBagConstraints.NONE;
@@ -140,22 +155,38 @@ public class SimpleGUI{
         
     }
     
-    
     String playerMove;
-    String answer = "no";
+    //String answer = "no";
     public void gameListeners(){
+
+        ActionListener uploadNewDeck = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                inputDeck = true;
+                JFileChooser file_upload = new JFileChooser();
+                int u = file_upload.showOpenDialog(null);
+                File fromPath = new File(file_upload.getSelectedFile().getAbsolutePath());
+                File toPath = new File("./newCards.txt");
+                try{
+                    Files.move(fromPath.toPath(), toPath.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+                catch(IOException e){}
+                
+            }
+        }; selectDeck.addActionListener(uploadNewDeck);
 
         ActionListener randomCheckBox = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae){
 
                 if(randomDeal.isSelected()){
-                    answer = "yes";
+                    randomArg = true;
                 }else{
-                    answer = "no";
+                    randomArg = false;
                 }
             }
         };
+
         randomDeal.addActionListener(randomCheckBox);
         ActionListener startingActions = new ActionListener() {
             @Override
@@ -165,14 +196,14 @@ public class SimpleGUI{
                 name2 = player2TF.getText();
                 player1 = new Player(name1);
                 player2 = new Player(name2);
+
                 startingText += "Welcome, " + name1 + " and " + name2 +"!\nThe game begins.\n\n";
                 area.setText(startingText);
-                gameMaster = new GameMaster(player1, player2);
-                if(answer.equals("yes")){
-                    startingText += gameMaster.randomDealCard();
-                }else if(answer.equals("no")){
-                    startingText += gameMaster.dealCard();
+                try{
+                    gameMaster = new GameMaster(player1, player2, randomArg, inputDeck);
                 }
+                catch(FileNotFoundException e){}
+                startingText += gameMaster.dealCard();
                 area.setText(startingText);
             }
         };
@@ -182,18 +213,15 @@ public class SimpleGUI{
             @Override
             public void actionPerformed(ActionEvent ae){
                 Object move = ae.getSource();
+                if(gameMaster.hasWinner() == false){
                     if(move == attack){
                         playerMove = "attack";
                     }else if(move == swap){
                         playerMove = "swap";
                     }
-            
                     String game = gameMaster.play(playerMove);
                     area.setText(game);
-
-                    if(gameMaster.hasWinner() == true){
-                        area.setText("Game Over. Click 'Display Game Report' to see game stats.");
-                    }    
+                }
             }
         };
         attack.addActionListener(moveButton);

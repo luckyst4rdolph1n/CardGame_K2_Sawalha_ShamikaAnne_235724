@@ -1,4 +1,6 @@
 import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.lang.Math;
 
 public class GameMaster{
@@ -10,7 +12,8 @@ public class GameMaster{
     private Player Player1;
     private Player Player2;
     private ArrayList<Integer> indices;
-    
+    private boolean random;
+    private boolean newDeck;
 
     private void assembleDeck(){
 
@@ -43,25 +46,40 @@ public class GameMaster{
     }
 
     @SuppressWarnings("unchecked")
-    public GameMaster(Player a, Player b){
+    public GameMaster(Player a, Player b, boolean r, boolean n)throws FileNotFoundException{
 
         turnCounter = 1;
         deck = new ArrayList<Card>();
         assembleDeck();
         deckCopy = (ArrayList<Card>)deck.clone();
         indices = new ArrayList<Integer>();
-        for(int i = 0; i < 26; i++){
-            indices.add(i);
-        }
         winner = false;
         Player1 = a;
         Player2 = b;
+        random = r;
+        newDeck = n;
+        if(newDeck == true){
+            deck.clear();
+            deckCopy.clear();
+            FileReader deckReader = new FileReader("newCards.txt");
+            Scanner sc = new Scanner(deckReader);
+            while(sc.hasNextLine()){
+                String[] newCard = sc.nextLine().split(" ");
+                deck.add(new Card(newCard[0], newCard[1], Integer.parseInt(newCard[2]), Integer.parseInt(newCard[3])));
+            }
+            deckCopy = (ArrayList<Card>)deck.clone();
+        }
+        for(int i = 0; i < deck.size(); i++){
+            indices.add(i);
+        }
+        
     }
-
+    
     public String dealCard(){
         String dealMessage = "";
         String altMessage = "";
-        for(Card card: deck){
+        if(random == false){
+          for(Card card: deck){
             if(turnCounter % 2 != 0){
                 if(Player1.handIsFull() == false){
                     Player1.drawCard(card);
@@ -83,15 +101,10 @@ public class GameMaster{
                     break;
                 }
             }
+        }  
         }
-        return dealMessage;     
-    }
-
-    public String randomDealCard(){
-        String dealMessage = "";
-        String altMessage = "";
-        
-        for(int i = 0; i < deck.size(); i++ ){
+        else{
+            for(int i = 0; i < deck.size(); i++ ){
             int index = (int) (Math.random()*indices.size());
             if(turnCounter % 2 != 0){
                 if(Player1.handIsFull() == false){
@@ -116,7 +129,9 @@ public class GameMaster{
                     break;
                 }
             }
-        }return dealMessage;
+        }  
+        }
+        return dealMessage;     
     }
 
    public String play(String action){
@@ -157,8 +172,8 @@ public class GameMaster{
                 Player1.claimToken();
                 playMessage += "   " + Player1.getName() + " gets a token!\n";
                 if(Player1.getTokens() >= 3){
-                    winner = true;
                     playMessage += Player1.getName() + " wins!!!\n"; 
+                    winner = true;
                 }
                 }
                 turnCounter += 1;
@@ -186,8 +201,9 @@ public class GameMaster{
                 Player2.claimToken();
                 playMessage += "   " + Player2.getName() + " gets a token!\n";
                 if(Player2.getTokens() >= 3){
-                    winner = true;
                     playMessage += Player2.getName() + " wins!!!\n";
+                    winner = true;
+                    
                 }
                 }
                 turnCounter += 1;
