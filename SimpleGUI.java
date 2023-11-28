@@ -1,3 +1,22 @@
+/**
+    @author Shamika Anne E. Sawalha (235724)
+    @version November 16, 2023
+**/
+
+/*
+I have not discussed the Java language code in my program
+with anyone other than my instructor or the teaching assistants
+assigned to this course.
+
+I have not used Java language code obtained from another student,
+or any other unauthorized source, either modified or unmodified.
+
+If any Java language code or documentation used in my program
+was obtained from another source, such as a textbook or website,
+that has been clearly noted with a proper citation in the comments
+of my program.
+*/
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -39,6 +58,12 @@ public class SimpleGUI{
     private boolean randomArg;
     private boolean inputDeck;
 
+    /**
+        Constructor initializes the variables
+        @param w width of the frame
+        @param h height of the frame
+
+    **/
 
     public SimpleGUI(int w, int h){
         frame = new JFrame();
@@ -70,6 +95,10 @@ public class SimpleGUI{
         inputDeck = false;
 
     }
+
+    /**
+        Sets up the components of the GUI
+    **/
 
     public void setUpGUI(){
         frame.setSize(width, height);
@@ -155,8 +184,11 @@ public class SimpleGUI{
         
     }
     
+    /**
+        Creates button listeners
+    **/
+
     String playerMove;
-    //String answer = "no";
     public void gameListeners(){
 
         ActionListener uploadNewDeck = new ActionListener() {
@@ -164,7 +196,7 @@ public class SimpleGUI{
             public void actionPerformed(ActionEvent ae){
                 inputDeck = true;
                 JFileChooser file_upload = new JFileChooser();
-                int u = file_upload.showOpenDialog(null);
+                file_upload.showOpenDialog(null);
                 File fromPath = new File(file_upload.getSelectedFile().getAbsolutePath());
                 File toPath = new File("./newCards.txt");
                 try{

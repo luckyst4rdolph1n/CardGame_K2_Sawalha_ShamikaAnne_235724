@@ -3,6 +3,25 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.Math;
 
+/**
+    @author Shamika Anne E. Sawalha (235724)
+    @version November 16, 2023
+**/
+
+/*
+I have not discussed the Java language code in my program
+with anyone other than my instructor or the teaching assistants
+assigned to this course.
+
+I have not used Java language code obtained from another student,
+or any other unauthorized source, either modified or unmodified.
+
+If any Java language code or documentation used in my program
+was obtained from another source, such as a textbook or website,
+that has been clearly noted with a proper citation in the comments
+of my program.
+*/
+
 public class GameMaster{
 
     private int turnCounter;
@@ -14,6 +33,12 @@ public class GameMaster{
     private ArrayList<Integer> indices;
     private boolean random;
     private boolean newDeck;
+
+     /**
+        * The assembleDeck() method is a private method.
+        * It is given entirely to the student.
+        * It must NOT be modified.
+    */
 
     private void assembleDeck(){
 
@@ -45,6 +70,17 @@ public class GameMaster{
         deck.add( new Card( "Ghost", "Zulu", 125, 46 ) );
     }
 
+    /**
+        Constructor initializes Player1, Player2, random, newDeck
+        to parameter values a, b, r, n, respectively
+
+        @param a player 1
+        @param b player 2
+        @param r indicates random deal
+        @param n indicates input from file
+
+    **/
+
     @SuppressWarnings("unchecked")
     public GameMaster(Player a, Player b, boolean r, boolean n)throws FileNotFoundException{
 
@@ -74,6 +110,12 @@ public class GameMaster{
         }
         
     }
+
+    /**
+        Fills each player's hand at the start of the game
+        @return dealMessage the card dealing process
+
+    **/
     
     public String dealCard(){
         String dealMessage = "";
@@ -133,6 +175,13 @@ public class GameMaster{
         }
         return dealMessage;     
     }
+
+    /**
+        Handles each player's turn in the game
+        @param action either attack or swap
+        @return playMessage the result of each turn
+
+    **/
 
    public String play(String action){
         String playMessage = "";
@@ -211,10 +260,15 @@ public class GameMaster{
         }
         return playMessage;
     }
-    /*  Dragon cards are resistant to Ghost cards.
-        Ghost cards are resistant to Fairy cards.
-        Fairy cards are resistant to Dragon cards.
-    */
+
+    /**
+        Checks whether a card type is resistant to another
+        @param type1 type of target-card
+        @param type2 type of card-in-play
+        @return resistant 
+
+    **/
+
     public boolean checkResistance(String type1, String type2){
         boolean resistant = false;
 
@@ -229,10 +283,15 @@ public class GameMaster{
         }return resistant;
             
     }
-    /*  Dragon cards are weak to Fairy cards.
-        Fairy cards are weak to Ghost cards.
-        Ghost cards are weak to Dragon cards.
-    */
+
+    /**
+        Checks whether a card type is weak to another
+        @param type1 type of target-card
+        @param type2 type of card-in-play
+        @return weak
+
+    **/
+
     public boolean checkWeakness(String type1, String type2){
         boolean weak = false;
 
@@ -246,6 +305,14 @@ public class GameMaster{
             weak = false;
         }return weak;        
     }
+
+    /**
+        Applies the damage a target-card will sustain
+        @param inPlay card-in-play
+        @param target target-card
+        @return messageDamage resulting string after damage is applied 
+
+    **/
 
     public String dealDamage(Card inPlay, Card target){
         String inPlayType = inPlay.getType();
@@ -268,6 +335,11 @@ public class GameMaster{
         return messageDamage;
     }
 
+    /**
+        Checks if a player has already won the game
+        @return won
+    **/
+    
     public boolean hasWinner(){
         boolean won;
         if(winner == true){
@@ -277,6 +349,11 @@ public class GameMaster{
         }
         return won;
     }
+
+    /**
+        Outputs the summary of the game play
+        @return gameReport
+    **/
 
     public String gameReport(){
         String gameReport = "";
