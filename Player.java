@@ -1,4 +1,4 @@
-/**
+/** The Player class represents a player's state throughout the game
     @author Shamika Anne E. Sawalha (235724)
     @version November 16, 2023
 **/
@@ -56,6 +56,7 @@ public class Player{
     **/
 
     public void drawCard(Card c){
+        //System.out.println(playerDeck.length);
         for(int i=0; i<MAX; i++){
             if(playerDeck[i] == null){
                 playerDeck[i] = c;
@@ -108,12 +109,12 @@ public class Player{
         int same = 0;
         int toSwap = products[0];
         int index = 0;
-        for(int i=0; i<products.length-1; i++){
-            if(toSwap > products[i+1]){
-                toSwap = toSwap; //[a,) c, e, g, i]
-            }else if(toSwap < products[i+1]){
-                toSwap = products[i+1];
-                index = i+1;
+        for(int i=1; i<products.length; i++){
+            if(toSwap > products[i]){
+                continue;
+            }else if(toSwap < products[i]){
+                toSwap = products[i];
+                index = i;
             }else{
                 same += 1;
                 continue;
@@ -187,9 +188,9 @@ public class Player{
 
     public String statusReport(){
         String statusReport = "";
-        statusReport += getName() + "\n";
+        statusReport += getName().toUpperCase() + "\n";
         for(Card playerCard: playerDeck){
-            statusReport += "    " + playerCard.getName() + " : " + playerCard.getHealth() + "\n";
+            statusReport += "    " + String.format("%10s : %-10s\n", playerCard.getName(), playerCard.getHealth());
         }return statusReport;
     }
 }

@@ -1,4 +1,4 @@
-/**
+/** The SimpleApp class generates the GUI from the SimpleGUI class through the main method
     @author Shamika Anne E. Sawalha (235724)
     @version November 16, 2023
 **/
@@ -19,6 +19,12 @@ of my program.
 
 public class SimpleApp {
     
+    /**
+        generates a GUI for the user
+        @param args commandline arguments
+
+    **/
+
     public static void main(String[] args) {
         SimpleGUI gui = new SimpleGUI(800, 600);
         gui.setUpGUI();

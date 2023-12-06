@@ -1,4 +1,5 @@
-/**
+/** The Card class enables the Game Master class to retrieve the name, type, health, and attack power of a Card object
+ * and allows the Card object to take damage
     @author Shamika Anne E. Sawalha (235724)
     @version November 16, 2023
 **/

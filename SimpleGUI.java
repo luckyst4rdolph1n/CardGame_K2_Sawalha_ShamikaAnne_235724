@@ -1,4 +1,4 @@
-/**
+/** The SimpleGUI class organizes the GUI components for the game
     @author Shamika Anne E. Sawalha (235724)
     @version November 16, 2023
 **/
@@ -59,7 +59,7 @@ public class SimpleGUI{
     private boolean inputDeck;
 
     /**
-        Constructor initializes the variables
+        Constructor initializes the components that will form the GUI
         @param w width of the frame
         @param h height of the frame
 

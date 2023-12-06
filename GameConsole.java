@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
-/**
+/** The Game Console class gives the user a console interface through which to play the game
     @author Shamika Anne E. Sawalha (235724)
     @version November 16, 2023
 **/
@@ -20,7 +17,16 @@ that has been clearly noted with a proper citation in the comments
 of my program.
 */
 
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class GameConsole{
+
+    /**
+        gives the user a console interface
+        @param args commandline arguments
+
+    **/
 
     public static void main(String[] args)throws FileNotFoundException{
         Player player1 = new Player(args[0]);
@@ -54,6 +60,8 @@ public class GameConsole{
         }
         
         System.out.println(gameMaster.gameReport());
+        scanner.close();
+        
     }
     
 }

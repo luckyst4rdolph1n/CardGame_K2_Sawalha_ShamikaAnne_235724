@@ -1,9 +1,4 @@
-import java.util.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.lang.Math;
-
-/**
+/** The Game Master class responsible for the overall game-play, keeping track of turns, and declaring the winner
     @author Shamika Anne E. Sawalha (235724)
     @version November 16, 2023
 **/
@@ -21,6 +16,11 @@ was obtained from another source, such as a textbook or website,
 that has been clearly noted with a proper citation in the comments
 of my program.
 */
+
+import java.util.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.lang.Math;
 
 public class GameMaster{
 
@@ -104,6 +104,7 @@ public class GameMaster{
                 deck.add(new Card(newCard[0], newCard[1], Integer.parseInt(newCard[2]), Integer.parseInt(newCard[3])));
             }
             deckCopy = (ArrayList<Card>)deck.clone();
+            sc.close();
         }
         for(int i = 0; i < deck.size(); i++){
             indices.add(i);
@@ -204,20 +205,17 @@ public class GameMaster{
                 if(Player2.getActiveCard().getHealth() <= 0){
                     playMessage += "   " + Player2.getName() + " discards " + Player2.getActiveCard().getName() + ".\n";
                     Player2.discard();
-                    int toRemove = 0;
-                    for(int i=0; i<1; i++){
-                        if(deckCopy.get(i).getHealth() * deckCopy.get(i).getPower() > deckCopy.get(i+1).getHealth() * deckCopy.get(i+1).getPower()){
-                            Player2.drawCard(deckCopy.get(i));
-                            playMessage += "   " + Player2.getName() + " draws " + deckCopy.get(i).getName() + ".\n";
-                            deckCopy.add(deckCopy.get(i+1));
+                        if(deckCopy.get(0).getHealth() * deckCopy.get(0).getPower() > deckCopy.get(1).getHealth() * deckCopy.get(1).getPower()){
+                            Player2.drawCard(deckCopy.get(0));
+                            playMessage += "   " + Player2.getName() + " draws " + deckCopy.get(0).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(1));
                         }else{
-                            Player2.drawCard(deckCopy.get(i+1));
-                            playMessage += "   " + Player2.getName() + " draws " + deckCopy.get(i+1).getName() + ".\n";
-                            deckCopy.add(deckCopy.get(i));
+                            Player2.drawCard(deckCopy.get(1));
+                            playMessage += "   " + Player2.getName() + " draws " + deckCopy.get(1).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(0));
                         } 
-                    }
-                    deckCopy.remove(toRemove+1);
-                    deckCopy.remove(toRemove);
+                    deckCopy.remove(1);
+                    deckCopy.remove(0);
                 Player1.claimToken();
                 playMessage += "   " + Player1.getName() + " gets a token!\n";
                 if(Player1.getTokens() >= 3){
@@ -233,20 +231,17 @@ public class GameMaster{
                 if(Player1.getActiveCard().getHealth() <= 0){
                     playMessage += "   " + Player1.getName() + " discards " + Player1.getActiveCard().getName() + ".\n";
                     Player1.discard();
-                    int toRemove = 0;
-                    for(int i=0; i<1; i++){
-                        if(deckCopy.get(i).getHealth() * deckCopy.get(i).getPower() > deckCopy.get(i+1).getHealth() * deckCopy.get(i+1).getPower()){
-                            Player1.drawCard(deckCopy.get(i));
-                            playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(i).getName() + ".\n";
-                            deckCopy.add(deckCopy.get(i+1));
+                        if(deckCopy.get(0).getHealth() * deckCopy.get(0).getPower() > deckCopy.get(1).getHealth() * deckCopy.get(1).getPower()){
+                            Player1.drawCard(deckCopy.get(0));
+                            playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(0).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(1));
                         }else{
-                            Player1.drawCard(deckCopy.get(i+1));
-                            playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(i+1).getName() + ".\n";
-                            deckCopy.add(deckCopy.get(i));
+                            Player1.drawCard(deckCopy.get(1));
+                            playMessage += "   " + Player1.getName() + " draws " + deckCopy.get(1).getName() + ".\n";
+                            deckCopy.add(deckCopy.get(0));
                         } 
-                    }
-                    deckCopy.remove(toRemove+1);
-                    deckCopy.remove(toRemove);
+                    deckCopy.remove(1);
+                    deckCopy.remove(0);
                 Player2.claimToken();
                 playMessage += "   " + Player2.getName() + " gets a token!\n";
                 if(Player2.getTokens() >= 3){
